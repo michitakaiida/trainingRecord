@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+　　<meta charset="utf-8">
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet" media="screen">
+	<style type="text/css">body { padding-top: 40px; }</style>
+    <script src="javascripts/jquery-2.0.3.min.js"></script>
+    <script src="javascripts/jquery-2.0.3.min.map"></script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    <script src="javascripts/dropdown.js"></script>
+    <title>{{title}}</title>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  ...
+</nav>
+<div class="row">
+  <div class="col-md-4">TODAY:{{today}}</div>
+ 	<form action="/" method="post">
+  		<div class="col-md-8">
+     			<div class="row">
+				<div class="col-md-5" id="trainingTypeArea">
+  					<select class="form-control trainingType" name="trainingType">
+						<option>スイム</option>
+						<option>筋トレ</option>
+					</select>
+		      		</div>
+      			<div class="col-md-2" id="countArea">
+	        		<select class="form-control count" name="count">
+					<option>1</option>
+					<option>2</option>
+				</select>
+		      	</div>
+			<div class="col-md-5" id="recordArea">
+				<button type="button" id="recordBtn" class="btn btn-primary record">記録</button><p></p>
+			</div>
+
+			<p></p>
+			<p></p>
+			<div class="col-md-5">
+				<button type="submit" class="btn btn-primary btn-lg btn-block end" name="submitBtn">今日のトレーニングを終了</button>
+			</div>
+	    </div>
+	</form> 
+ </div>
+</div>
+<p></p>
+{{message}}
+{{rows.resltId}}
+<script type="text/javascript">
+$(function(){
+  $('.record').click(function(){
+    $('.record').attr({disabled:"disabled"}).text("終了");
+    $('.count').attr({disabled:"disabled"});
+    $('.trainingType').attr({disabled:"disabled"});
+  //  addInput();
+    $('.record').last().removeAttr("disabled").text("記録");
+    $('.count').last().removeAttr("disabled");
+     $('.trainingType').last().removeAttr("disabled");
+  })
+
+$('.end').click(function(){
+    $('.record').removeAttr("disabled");
+    $('.count').removeAttr("disabled");
+    $('.trainingType').removeAttr("disabled");
+    console.log($('.count').val());
+  })
+})
+
+var arInput = 1; //初期入力フォームの数
+var Default = arInput;
+function addInput() {
+　arInput ++;
+　$("#trainingTypeArea").append('<p></p><select class=\"form-control trainingType\" name=\"trainingType'+arInput+'\"><option>スイム</option><option>筋トレ</option></select>');
+　$("#countArea").append('<p></p><select class=\"form-control count\" name=\"count'+arInput+'\"><option>1</option><option>2</option></select>');
+ // $("#recordArea").append('<p></p><button type=\"button\" class=\"btn btn-primary record\">記録</button>');;
+  }
+
+ $("#recordBtn").on('click',function(){
+	addInput();
+        $('#recordBtn').removeAttr("disabled");
+	$("#recordArea").clone(true).insertAfter("#recordArea");
+	$('.record').last().removeAttr("disabled");
+        console.log("12345678"+this);
+  });
+
+</script>
+  </body>
+</html>
